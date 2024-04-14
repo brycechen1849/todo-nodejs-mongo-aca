@@ -3,7 +3,6 @@ param location string = resourceGroup().location
 param tags object = {}
 
 param identityName string
-// param applicationInsightsName string
 param containerAppsEnvironmentName string
 param containerRegistryName string
 param containerRegistryHostSuffix string
@@ -64,10 +63,6 @@ module app '../core/host/container-app-upsert.bicep' = {
         name: 'AZURE_APPCONFIGURATION_ENDPOINT'
         value: appConfiguratoin.properties.endpoint
       }
-      // {
-      //   name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-      //   value: applicationInsights.properties.ConnectionString
-      // }
       {
         name: 'API_ALLOW_ORIGINS'
         value: corsAcaUrl
@@ -77,9 +72,6 @@ module app '../core/host/container-app-upsert.bicep' = {
   }
 }
 
-// resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = {
-//   name: applicationInsightsName
-// }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
   name: keyVaultName

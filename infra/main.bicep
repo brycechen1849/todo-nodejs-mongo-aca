@@ -104,7 +104,6 @@ module api './app/api.bicep' = {
     location: location
     tags: tags
     identityName: '${abbrs.managedIdentityUserAssignedIdentities}api-${resourceToken}'
-    // applicationInsightsName: monitoring.outputs.applicationInsightsName
     containerAppsEnvironmentName: containerApps.outputs.environmentName
     containerRegistryName: containerApps.outputs.registryName
     containerRegistryHostSuffix: containerRegistryHostSuffix
@@ -148,7 +147,6 @@ module appConfig './core/config/configstore.bicep' = {
     name: !empty(appConfigName) ? appConfigName :'${abbrs.appConfigurationStores}${resourceToken}'
     location: location
     tags: tags
-    // principalId: principalId
   }
 }
 

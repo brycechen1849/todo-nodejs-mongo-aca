@@ -12,7 +12,7 @@ export const getConfig: () => Promise<AppConfig> = async () => {
         dotenv.config();
     }
 
-    // TODO: Disable reading from Azure KeyVault, enable reading from Azure AppConfig
+    // TODO: Discuss if keep Keyvault or integrate into binding as infra when creating Connector
     await populateEnvironmentFromKeyVault();
     await populateEnvironmentFromAppConfig();
 
