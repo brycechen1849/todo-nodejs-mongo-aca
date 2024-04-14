@@ -3,11 +3,12 @@ param location string = resourceGroup().location
 param tags object = {}
 
 param identityName string
-param applicationInsightsName string
+// param applicationInsightsName string
 param containerAppsEnvironmentName string
 param containerRegistryName string
 param containerRegistryHostSuffix string
 param keyVaultName string
+param appConfigName string
 param serviceName string = 'api'
 param corsAcaUrl string
 param exists bool
@@ -51,9 +52,13 @@ module app '../core/host/container-app-upsert.bicep' = {
         value: keyVault.properties.vaultUri
       }
       {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsights.properties.ConnectionString
+        name: 'AZURE_APPCONFIGURATION_ENDPOINT'
+        value: appConfiguratoin.properties.endpoint
       }
+      // {
+      //   name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+      //   value: applicationInsights.properties.ConnectionString
+      // }
       {
         name: 'API_ALLOW_ORIGINS'
         value: corsAcaUrl
@@ -63,12 +68,16 @@ module app '../core/host/container-app-upsert.bicep' = {
   }
 }
 
-resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = {
-  name: applicationInsightsName
-}
+// resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = {
+//   name: applicationInsightsName
+// }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
   name: keyVaultName
+}
+
+resource appConfiguratoin 'Microsoft.AppConfiguration/configurationStores@2023-03-01' existing = {
+  name: appConfigName
 }
 
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = apiIdentity.properties.principalId
