@@ -27,6 +27,15 @@ module apiKeyVaultAccess '../core/security/keyvault-access.bicep' = {
   }
 }
 
+// Give the API access to App Configuration. Role assignment after both created otherwise mutual dependency.
+module appConfigurationAccess '../core/security/configstore-access.bicep' = {
+  name: 'app-configuration-access'
+  params: {
+    configStoreName: appConfiguratoin.name
+    principalId: apiIdentity.properties.principalId
+  }
+}
+
 module app '../core/host/container-app-upsert.bicep' = {
   name: '${serviceName}-container-app'
   dependsOn: [ apiKeyVaultAccess ]

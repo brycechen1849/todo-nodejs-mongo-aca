@@ -152,20 +152,6 @@ module appConfig './core/config/configstore.bicep' = {
   }
 }
 
-// Give the API access to App Configuration. Role assignment after both created otherwise mutual dependency.
-module appConfigurationAccess './core/security/configstore-access.bicep' = {
-  scope: rg
-  name: 'app-configuration-access'
-  dependsOn: [
-      api
-      appConfig
-    ]
-  params: {
-    configStoreName: appConfig.outputs.name
-    principalId: api.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
-  }
-}
-
 // Monitor application with Azure Monitor
 module monitoring './core/monitor/monitoring.bicep' = {
   name: 'monitoring'
